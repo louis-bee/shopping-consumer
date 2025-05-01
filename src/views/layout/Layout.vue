@@ -63,7 +63,7 @@ export default {
           this.list = res.data.list.map(item => {
             return {
               ...item,
-              image: 'http://127.0.0.1:3009/uploads/' + item.images[0]
+              image: `${process.env.VUE_APP_API_URL}/uploads/` + item.images[0]
             }
           })
         } else {
@@ -114,12 +114,13 @@ export default {
         height: 300px;
       }
       .name {
-        margin-top: 14px;
-        margin-bottom: 14px;
+        // margin-top: 14px;
+        // margin-bottom: 14px;
         padding: 0 5px;
         width: 100%;
         font-size: 16px;
-        line-height: 16px;
+        height: 44px;
+        line-height: 44px;
         overflow: hidden;
         text-overflow: ellipsis;
       }

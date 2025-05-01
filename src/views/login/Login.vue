@@ -44,7 +44,11 @@ export default {
   },
   methods: {
     forgetPwd () {
-
+      alert('请联系客服\n电话：13724648288\n邮箱：2720447678@qq.com')
+      window.scrollTo({
+        top: document.body.scrollHeight, // 滚动到页面顶部
+        behavior: 'smooth' // 平滑滚动效果
+      })
     },
     submit () {
       if (!this.form.account || !this.form.pwd) {

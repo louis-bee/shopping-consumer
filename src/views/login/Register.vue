@@ -55,7 +55,10 @@ export default {
       if (this.form.pwd !== this.pwd2) {
         return alert('两次输入的密码不一致')
       }
-      this.$apis.user.register(this.form).then(res => {
+      const params = {
+        userInfo: this.form
+      }
+      this.$apis.user.register(params).then(res => {
         console.log(res)
         if (res.status === 200) {
           alert('注册成功！')

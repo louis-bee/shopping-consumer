@@ -84,8 +84,13 @@ export default {
     },
     logout () {
       clearStorage()
-      this.$router.replace('/')
-      // location.reload()
+      this.isLogin = false
+      if (this.$route.path !== '/') {
+        this.$router.push('/')
+      } else {
+        location.reload()
+      }
+      // this.$router.replace('/')
     },
     toMyOrder () {
       if (this.$route.path !== '/myOrder') {

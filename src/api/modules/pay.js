@@ -6,6 +6,9 @@ const pay = {
   },
   payBill (params) {
     return post('/pay/payBill', params)
+  },
+  sendCode (params) {
+    return post('/pay/sendCode', params)
   }
 }
 

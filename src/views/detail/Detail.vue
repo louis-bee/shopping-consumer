@@ -58,7 +58,7 @@ export default {
           this.detail = {
             ...res.data,
             imageList: res.data.images.map(item => {
-              return 'http://127.0.0.1:3009/uploads/' + item
+              return `${process.env.VUE_APP_API_URL}/uploads/` + item
             })
           }
           console.log(this.detail)
@@ -71,6 +71,10 @@ export default {
       this.count = val
     },
     handleAddtoCart () {
+      if (!localStorage.getItem('token')) {
+        alert('请先登录')
+        return this.$router.push('/login')
+      }
       const params = {
         userId: JSON.parse(localStorage.getItem('userInfo')).id,
         goodsId: this.goodsId,
@@ -130,6 +134,7 @@ export default {
       }
     }
     .button {
+      cursor: pointer;
       margin-top: 20px;
       height: 45px;
       width: 305px;

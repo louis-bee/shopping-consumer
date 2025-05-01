@@ -3,7 +3,7 @@ import user from '@/api/modules/user'
 import clearStorage from '@/utils/clearStorage'
 
 const request = axios.create({
-  baseURL: 'http://localhost:3009',
+  baseURL: process.env.VUE_APP_API_URL,
   timeout: 10000
 })
 

@@ -81,7 +81,7 @@ export default {
           this.list = res.data.list.map(item => {
             return {
               ...item,
-              image: 'http://127.0.0.1:3009/uploads/' + item.images[0]
+              image: `${process.env.VUE_APP_API_URL}/uploads/` + item.images[0]
             }
           })
           console.log(res.desc)
@@ -96,7 +96,7 @@ export default {
         email: this.form.email,
         userId: JSON.parse(localStorage.getItem('userInfo')).id
       }
-      this.$apis.email.sendCode(params).then(res => {
+      this.$apis.pay.sendCode(params).then(res => {
         if (res.status === 200) {
           this.sendStatus = 2
           this.timeCounter = 59

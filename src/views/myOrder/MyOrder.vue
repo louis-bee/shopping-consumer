@@ -17,7 +17,8 @@
             <img :src="item.image || require('@/assets/img/examplegoods.webp')" alt="">
             <div class="detail">
               <div class="name">{{ item.goodsName || '示例商品名称' }}</div>
-              <!-- <div class="del" @click="handleDelete(item.id)">删除</div> -->
+              <div class="status" v-if="item.status===2">待发货</div>
+              <div class="status" v-else>已发货</div>
             </div>
             <div class="count-box">
               ￥{{ item.price }}
@@ -67,7 +68,7 @@ export default {
         behavior: 'smooth' // 平滑滚动效果
       })
       this.page.pageNum = newPage
-      this.getCartList()
+      this.getOrderList()
     },
     handleTabChange (typeId) {
       this.$router.push({ path: '/', query: { typeId: typeId } })
@@ -76,14 +77,15 @@ export default {
       const params = {
         userId: JSON.parse(localStorage.getItem('userInfo')).id,
         pageNum: this.page.pageNum,
-        pageSize: this.page.pageSize
+        pageSize: this.page.pageSize,
+        role: 1
       }
       this.$apis.order.getOrderList(params).then(res => {
         if (res.status === 200) {
           this.list = res.data.list.map(item => {
             return {
               ...item,
-              image: 'http://127.0.0.1:3009/uploads/' + item.images[0]
+              image: `${process.env.VUE_APP_API_URL}/uploads/` + item.images[0]
             }
           })
           this.page.total = res.data.total
@@ -161,14 +163,10 @@ export default {
             text-wrap: none;
             white-space: nowrap;
           }
-          .del {
+          .status {
             display: inline-block;
-            cursor: pointer;
             margin-top: 45px;
             font-size: 13px;
-            &:hover {
-              opacity: 0.2;
-            }
           }
         }
         .count-box {

@@ -77,7 +77,7 @@ export default {
           this.list = res.data.list.map(item => {
             return {
               ...item,
-              image: 'http://127.0.0.1:3009/uploads/' + item.images[0]
+              image: `${process.env.VUE_APP_API_URL}/uploads/` + item.images[0]
             }
           })
           console.log(res.desc)
