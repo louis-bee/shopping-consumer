@@ -19,6 +19,7 @@
               <div class="name">{{ item.goodsName || '示例商品名称' }}</div>
               <div class="status" v-if="item.status===2">待发货</div>
               <div class="status" v-else>已发货</div>
+              <div class="status time" >{{item.time}}</div>
             </div>
             <div class="count-box">
               ￥{{ item.price }}
@@ -165,8 +166,11 @@ export default {
           }
           .status {
             display: inline-block;
-            margin-top: 45px;
+            margin-top: 42px;
             font-size: 13px;
+          }
+          .time {
+            margin-left: 40px;
           }
         }
         .count-box {
