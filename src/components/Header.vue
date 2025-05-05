@@ -12,7 +12,7 @@
         </li>
       </div>
       <div v-if="showLinkBox" class="link-box">
-        <li v-if="!isLogin" @click="$router.push('/login')">登等等录</li>
+        <li v-if="!isLogin" @click="$router.push('/login')">登录</li>
         <li v-else @click="logout">退出登录</li>
         <li @click="toMyOrder" :class="link==='order'&&'active-li'">我的订单</li>
         <li @click="showCart" class="cart" :class="link==='cart'&&'active-li'"><span class="iconfont icon-24gl-bag"></span>{{$store.getters.cartNum}}</li>
