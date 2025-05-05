@@ -8,7 +8,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/comsumer/',
+      path: '/',
       name: 'Layout',
       component: () => import('@/views/layout/Layout.vue'),
       meta: { title: '首页 - 路易斯商城' }
