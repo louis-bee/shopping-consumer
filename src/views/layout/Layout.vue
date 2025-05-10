@@ -4,8 +4,8 @@
     <div class="main">
       <template v-if="list.length>0">
         <div class="list">
-          <li v-for="item in list" :key="item.id" @click="toDetail(item.id,item.type)">
-            <img :src="item.image || require('@/assets/img/examplegoods.webp')" alt="">
+          <li v-for="item in list" :key="item.id" @click="toDetail(item.id, item.type)">
+            <img :src="item.image" alt="">
             <div class="name">{{ item.goodsName }}</div>
             <div class="price">¥<span>{{item.price}}</span></div>
           </li>
@@ -18,7 +18,7 @@
         暂无商品
       </div>
     </div>
-    <Footer></Footer>
+    <Footer :first="showICP"></Footer>
   </div>
 
 </template>
@@ -41,12 +41,14 @@ export default {
         pageSize: 12,
         pageNum: 1
       },
-      list: []
+      list: [],
+      showICP: false
     }
   },
   created () {
     this.typeId = parseInt(this.$route.query.typeId)
     this.getGoodsList()
+    this.showICP = !localStorage.getItem('token')
   },
   methods: {
     getGoodsList () {

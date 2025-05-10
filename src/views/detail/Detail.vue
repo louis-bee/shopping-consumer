@@ -13,7 +13,7 @@
           <div class="label">数量</div>
           <Counter @count-change="handleCountChange"></Counter>
         </div>
-        <div class="button" @click="handleAddtoCart">添加到购物车</div>
+        <div class="button" :class="detail.status===2 && 'available'" @click="handleAddtoCart">添加到购物车</div>
         <div class="desc" v-html="detail.desc"></div>
       </div>
     </div>
@@ -71,6 +71,10 @@ export default {
       this.count = val
     },
     handleAddtoCart () {
+      if (this.detail.status !== 2) {
+        alert('该商品已下架')
+        return
+      }
       if (!localStorage.getItem('token')) {
         alert('请先登录')
         return this.$router.push('/login')
@@ -134,7 +138,7 @@ export default {
       }
     }
     .button {
-      cursor: pointer;
+      cursor: not-allowed;
       margin-top: 20px;
       height: 45px;
       width: 305px;
@@ -142,6 +146,10 @@ export default {
       line-height: 45px;
       font-size: 16px;
       color: rgb(216, 216, 212);
+      background-color: grey;
+    }
+    .available {
+      cursor: pointer;
       background-color: black;
       &:hover {
         background-color: rgb(235, 79, 71);

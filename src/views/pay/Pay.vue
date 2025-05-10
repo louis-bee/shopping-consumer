@@ -7,10 +7,10 @@
           <div class="list">
             <li v-for="item in list" :key="item.id">
               <div class="img">
-                <img :src="item.image || require('@/assets/img/examplegoods.webp')" alt="">
+                <img :src="item.image" alt="">
                 <div class="point">{{ item.number }}</div>
               </div>
-              <div class="name">{{ item.goodsName }}</div>
+              <div class="name" @click="toDetail(item.goodsId, item.type)">{{ item.goodsName }}</div>
               <div class="price">￥{{ (item.price*item.number).toFixed(2) }}</div>
             </li>
           </div>
@@ -53,8 +53,9 @@ export default {
     return {
       list: [],
       form: {
-        address: '随便',
-        email: '13724648288@163.com'
+        address: '',
+        email: '13724648288@163.com',
+        code: ''
       },
       sendStatus: 1,
       timeCounter: 59
@@ -124,8 +125,12 @@ export default {
       const newBalance = parseFloat(res.data.balance)
       userInfo.balance = newBalance
       localStorage.setItem('userInfo', JSON.stringify(userInfo))
-      if (newBalance < this.totalPrice) {
-        return alert('账户余额不足，请先充值') // 待优化：弹窗选择
+      if (newBalance > this.totalPrice) {
+        if (confirm('账户余额不足，请先充值')) {
+          return this.$router.push('/recharge')
+        } else {
+          return
+        }
       }
       const params = {
         ...this.form,
@@ -144,6 +149,9 @@ export default {
           alert(res.desc)
         }
       })
+    },
+    toDetail (id, type) {
+      this.$router.push({ path: `/goodsDetail/${id}`, query: { typeId: type } })
     }
   }
 }

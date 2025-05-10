@@ -9,6 +9,9 @@ const pay = {
   },
   sendCode (params) {
     return post('/pay/sendCode', params)
+  },
+  recharge (params) {
+    return post('/pay/recharge', params)
   }
 }
 

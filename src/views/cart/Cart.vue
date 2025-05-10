@@ -14,8 +14,8 @@
         </div>
         <div class="list">
           <li v-for="item,index in list" :key="item.id">
-            <img :src="item.image || require('@/assets/img/examplegoods.webp')" alt="">
-            <div class="detail">
+            <img :src="item.image" alt="">
+            <div class="detail" @click="toDetail(item.goodsId, item.type)">
               <div class="name">{{ item.goodsName || '示例商品名称' }}</div>
               <div class="del" @click="handleDelete(item.id)">删除</div>
             </div>
@@ -119,6 +119,9 @@ export default {
       } else {
         alert('购物车的商品下架了')
       }
+    },
+    toDetail (id, type) {
+      this.$router.push({ path: `/goodsDetail/${id}`, query: { typeId: type } })
     }
   }
 }

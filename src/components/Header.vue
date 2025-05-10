@@ -2,9 +2,9 @@
   <div>
     <div class="header" :class="fixed&&'fix'">
       <div class="logo-box">
-        <a href="https://space.bilibili.com/501779432" target="_blank"><img src="@/assets/img/brotherlouis.jpg" alt=""></a>
+        <a href="https://space.bilibili.com/501779432" target="_blank"><img src="@/assets/img/brotherlouis.webp" alt=""></a>
         <div class="line"></div>
-        <a @click="$router.push('/')" href=""><img src="@/assets/img/louislogo.jpg" alt=""></a>
+        <a @click="$router.push('/')" href=""><img src="@/assets/img/louislogo.webp" alt=""></a>
       </div>
       <div v-if="showNavBox" class="tab-box">
         <li v-for="item in tablist" :key="item.id" @click="tabChange(item.id)" :class="item.id===activeTab&&'active-li'">

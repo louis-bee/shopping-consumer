@@ -14,8 +14,8 @@
         </div>
         <div class="list">
           <li v-for="item in list" :key="item.id">
-            <img :src="item.image || require('@/assets/img/examplegoods.webp')" alt="">
-            <div class="detail">
+            <img :src="item.image" alt="">
+            <div class="detail" @click="toDetail(item.goodsId, item.type)">
               <div class="name">{{ item.goodsName || '示例商品名称' }}</div>
               <div class="status" v-if="item.status===2">待发货</div>
               <div class="status" v-else>已发货</div>
@@ -94,6 +94,9 @@ export default {
           console.log(res.desc)
         }
       })
+    },
+    toDetail (id, type) {
+      this.$router.push({ path: `/goodsDetail/${id}`, query: { typeId: type } })
     }
   }
 }

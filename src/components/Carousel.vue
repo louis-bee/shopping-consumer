@@ -1,20 +1,12 @@
 <template>
   <div class="container" :style="{ width: pxTovwWidth+'px', height: pxTovwHeight+'px' }">
-    <div class="list" ref="list">
+    <div class="list" ref="list" @wheel.prevent="handleWheel">
       <li class="first"><img :src="imageList[imageList.length-1]" alt="" :style="{width: pxTovwWidth+'px',height: pxTovwHeight+'px' }"></li>
       <li v-for="item,index in imageList" :key="index">
-        <img :src="item || require('@/assets/img/examplegoods.webp')" alt="" :style="{width: pxTovwWidth+'px'}">
+        <img :src="item" alt="" :style="{width: pxTovwWidth+'px'}">
       </li>
       <li class="last"><img :src="imageList[0]" alt="" :style="{width: pxTovwWidth+'px'}"></li>
     </div>
-  <!-- <div class="container" :style="{ width: '480px', height: '480px' }">
-    <div class="list" ref="list">
-      <li class="first"><img :src="imageList[imageList.length-1]" alt="" :style="{width: '480px',height: '480px' }"></li>
-      <li v-for="item,index in imageList" :key="index">
-        <img :src="item || require('@/assets/img/examplegoods.webp')" alt="" :style="{width: '480px'}">
-      </li>
-      <li class="last"><img :src="imageList[0]" alt="" :style="{width: '480px'}"></li>
-    </div> -->
     <div v-if="showBut" class="left" @click="handleLeftClick"></div>
     <div v-if="showBut" class="right" @click="handleRightClick"></div>
     <div class="indicater">
@@ -40,7 +32,7 @@ export default {
     },
     imageList: {
       type: Array,
-      default: () => ['@/assets/img/examplegoods.webp', '@/assets/img/examplegoods.webp', '@/assets/img/examplegoods.webp']
+      default: () => []
     },
     showBut: {
       type: Boolean,
@@ -120,6 +112,10 @@ export default {
       this.timer = setInterval(() => {
         this.toRight()
       }, 2000)
+    },
+    handleWheel (e) {
+      if (e.deltaY > 50) this.handleRightClick()
+      if (e.deltaY < -50) this.handleLeftClick()
     }
   }
 }
