@@ -8,6 +8,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '*',
+      redirect: '/'
+    },
+    {
       path: '/',
       name: 'Layout',
       component: () => import('@/views/layout/Layout.vue'),
@@ -59,7 +63,7 @@ const router = new VueRouter({
 })
 
 // 定义所有需要权限访问的页面
-const authUrls = ['/pay', '/cart', '/myOrder']
+const authUrls = ['/pay', '/cart', '/myOrder', '/recharge']
 // 全局前置导航守卫 在访问页面前执行
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || '路易斯商城'

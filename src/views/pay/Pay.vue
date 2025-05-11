@@ -125,7 +125,7 @@ export default {
       const newBalance = parseFloat(res.data.balance)
       userInfo.balance = newBalance
       localStorage.setItem('userInfo', JSON.stringify(userInfo))
-      if (newBalance > this.totalPrice) {
+      if (newBalance < this.totalPrice) {
         if (confirm('账户余额不足，请先充值')) {
           return this.$router.push('/recharge')
         } else {
