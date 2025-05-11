@@ -45,8 +45,6 @@ export default {
       pwd2: null
     }
   },
-  created () {
-  },
   methods: {
     submit () {
       if (!this.form.userName || !this.form.pwd || !this.form.account || !this.form.pwd || !this.pwd2) {

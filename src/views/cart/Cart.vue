@@ -1,46 +1,67 @@
 <template>
-  <div class="login">
+  <!-- 购物车页面容器 -->
+  <div>
+    <!-- 引入头部组件，设置固定定位，不显示导航和链接，显示购物车链接 -->
     <Header :fix=true @tab-change="handleTabChange" :link="'cart'"></Header>
+    <!-- 主体内容 -->
     <div class="main">
+      <!-- 购物车为空时显示的提示信息 -->
       <div v-if="list.length===0" class="empty">
         <h2>购物车空空如也~</h2>
         <span @click="$router.push('/')">去购物></span>
       </div>
+      <!-- 购物车非空时显示的商品列表 -->
       <div v-else class="cart">
+        <!-- 购物车标题 -->
         <div class="title">
           <h2>购物车</h2>
+          <!-- 商品数量列标题 -->
           <p class="flex-1">数量</p>
+          <!-- 商品价格列标题 -->
           <p>价格</p>
         </div>
+        <!-- 商品列表 -->
         <div class="list">
+          <!-- 循环渲染购物车中的商品 -->
           <li v-for="item,index in list" :key="item.id">
+            <!-- 商品图片 -->
             <img :src="item.image" alt="">
+            <!-- 商品详情 -->
             <div class="detail" @click="toDetail(item.goodsId, item.type)">
+              <!-- 商品名称 -->
               <div class="name">{{ item.goodsName || '示例商品名称' }}</div>
+              <!-- 删除按钮 -->
               <div class="del" @click="handleDelete(item.id)">删除</div>
             </div>
+            <!-- 商品数量计数器 -->
             <div class="count-box">
               <CounterMini :num="item.number || 1" @count-change="handleCountChange($event, item.id, index)"></CounterMini>
             </div>
+            <!-- 商品价格 -->
             <div class="price">￥{{ item.price || '999.99' }}</div>
           </li>
         </div>
+        <!-- 结算区域 -->
         <div class="checkout">
           <div class="box">
+            <!-- 结算信息 -->
             <div class="head">
               <span>合计</span>
               <span>￥{{ totalPrice }}</span>
             </div>
+            <!-- 结算按钮 -->
             <div class="but" @click="toPay">结 算</div>
           </div>
         </div>
       </div>
     </div>
+    <!-- 引入页脚组件 -->
     <Footer></Footer>
   </div>
 </template>
 
 <script>
+// 引入子组件
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import CounterMini from '@/components/CounterMini.vue'
@@ -53,10 +74,12 @@ export default {
   },
   data () {
     return {
+      // 购物车商品列表
       list: []
     }
   },
   computed: {
+    // 计算购物车总价
     totalPrice () {
       const res = this.list.reduce((sum, item) => {
         return sum + (item.price * item.number)
@@ -65,12 +88,15 @@ export default {
     }
   },
   mounted () {
+    // 组件挂载时获取购物车列表
     this.getCartList()
   },
   methods: {
+    // 处理头部组件的tab改变事件
     handleTabChange (typeId) {
       this.$router.push({ path: '/', query: { typeId: typeId } })
     },
+    // 获取购物车列表
     async getCartList () {
       this.$apis.cart.getCartList({ userId: JSON.parse(localStorage.getItem('userInfo')).id }).then(res => {
         if (res.status === 200) {
@@ -84,6 +110,7 @@ export default {
         }
       })
     },
+    // 处理数量改变事件
     handleCountChange (count, id, index) {
       if (count === this.list[index].number) return
       const params = {
@@ -97,6 +124,7 @@ export default {
         }
       })
     },
+    // 处理删除商品事件
     handleDelete (id) {
       // 待优化：弹窗确认
       const params = {
@@ -112,6 +140,7 @@ export default {
         }
       })
     },
+    // 跳转到支付页面
     async toPay () {
       await this.getCartList()
       if (this.list.length !== 0) {
@@ -120,6 +149,7 @@ export default {
         alert('购物车的商品下架了')
       }
     },
+    // 跳转到商品详情页
     toDetail (id, type) {
       this.$router.push({ path: `/goodsDetail/${id}`, query: { typeId: type } })
     }
@@ -128,6 +158,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// 购物车页面样式
 .flex-1 {
   flex:1
 }
@@ -237,7 +268,6 @@ export default {
           background-color: black;
           font-size: 16px;
           color: rgb(237, 237, 237);
-          // color: white;
           &:hover {
             background-color: rgb(235, 79, 71);
           }

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -20,9 +19,5 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    // logout (context) {
-    //   context.commit('setCartNum', 0)
-    // }
   }
-  // plugins: [createPersistedState()]
 })

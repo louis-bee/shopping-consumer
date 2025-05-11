@@ -112,7 +112,6 @@ export default {
         } else {
           this.sendStatus = store
           alert(res.desc)
-          // console.log(res.desc)
         }
       })
     },

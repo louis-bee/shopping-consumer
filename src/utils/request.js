@@ -10,7 +10,7 @@ const request = axios.create({
 // 添加请求拦截器
 request.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
-  if (token) {
+  if (token) { // 为每个请求携带token
     config.headers.Authorization = token
   }
   return config
@@ -23,10 +23,10 @@ request.interceptors.response.use(async (response) => {
   // 2xx 范围内的状态码都会触发该函数
   if (response.data && response.data.data && response.data.data.token !== undefined) {
     localStorage.setItem('token', response.data.data.token)
-  }
+  } // 响应包含token自动保存
   if (response.data && response.data.data && response.data.data.refreshToken !== undefined) {
     localStorage.setItem('refreshToken', response.data.data.refreshToken)
-  }
+  } // 响应包含refreshToken自动保存
   if (response.data.status === 401) {
     const refreshToken = localStorage.getItem('refreshToken')
     if (!refreshToken) {
@@ -39,14 +39,15 @@ request.interceptors.response.use(async (response) => {
       userId: JSON.parse(localStorage.getItem('userInfo')).id
     }
     const resr = await user.refreshToken(params)
-    if (resr.status === 402) { // 防止长token过期后的死循环
-      return
+    if (resr.status === 402) {
+      return // 防止长token过期后的死循环
     }
-    // 重新请求
+    // 重新发送原请求
     response.config.headers.Authorization = localStorage.getItem('token') // 用新token
     const res = await request.request(response.config)
     return res
   }
+  // 长token也过期了
   if (response.data.status === 402) {
     clearStorage()
     alert('登录已过期，请重新登录')
@@ -59,7 +60,6 @@ request.interceptors.response.use(async (response) => {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
   // if (error.response.status === 401) {
-
   // }
   return Promise.reject(error)
 })
