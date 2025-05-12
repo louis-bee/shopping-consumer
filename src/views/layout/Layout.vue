@@ -52,7 +52,8 @@ export default {
       typeId: null,
       page: {
         pageSize: 12,
-        pageNum: 1
+        pageNum: 1,
+        total: 1
       },
       list: [],
       showICP: false
@@ -77,6 +78,7 @@ export default {
       }
       this.$apis.goods.getGoodsList(params).then(res => {
         if (res.status === 200) {
+          this.page.total = res.data.total
           // 成功获取商品列表，处理图片路径
           this.list = res.data.list.map(item => {
             return {
@@ -93,6 +95,8 @@ export default {
     // 处理tab改变事件的方法
     handleTabChange (typeId) {
       this.typeId = typeId
+      this.page.pageNum = 1
+      this.page.total = 1
       this.getGoodsList()
     },
     // 跳转到商品详情的方法
