@@ -4,7 +4,7 @@
         <img src="@/assets/img/wechat.webp" alt="">
         <h4>联系客服</h4>
     </div>
-    <div class="icp" v-if="first"><a href="https://beian.miit.gov.cn/" target="_blank">粤B2-20250510</a></div>
+    <div class="icp" v-if="first"><a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2025414122号-1</a></div>
   </div>
 </template>
 
@@ -45,7 +45,7 @@ export default {
     align-items: center;
     a {
       color: #333;
-      // text-decoration: none;
+      text-decoration: none;
       font-size: 12px;
       &:hover {
         opacity: 0.5;
