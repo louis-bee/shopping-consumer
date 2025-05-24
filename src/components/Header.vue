@@ -6,7 +6,7 @@
       <!-- 包含logo和分隔线的logo-box区域 -->
       <div class="logo-box">
         <!-- 点击可跳转到指定url的链接 -->
-        <a href="<url>" target="_blank"><img src="@/assets/img/brotherlouis.webp" alt=""></a>
+        <a href="https://space.bilibili.com/501779432" target="_blank"><img src="@/assets/img/brotherlouis.webp" alt=""></a>
         <!-- 分隔线 -->
         <div class="line"></div>
         <!-- 点击可跳转到首页的链接 -->

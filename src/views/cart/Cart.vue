@@ -25,7 +25,7 @@
           <!-- 循环渲染购物车中的商品 -->
           <li v-for="item,index in list" :key="item.id">
             <!-- 商品图片 -->
-            <img :src="item.image" alt="">
+            <img v-lazy="item.image" alt="">
             <!-- 商品详情 -->
             <div class="detail" @click="toDetail(item.goodsId, item.type)">
               <!-- 商品名称 -->

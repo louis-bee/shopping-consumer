@@ -54,7 +54,7 @@ export default {
       list: [],
       form: {
         address: '',
-        email: '13724648288@163.com',
+        email: '',
         code: ''
       },
       sendStatus: 1,

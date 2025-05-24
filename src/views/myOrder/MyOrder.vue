@@ -14,7 +14,7 @@
         </div>
         <div class="list">
           <li v-for="item in list" :key="item.id">
-            <img :src="item.image" alt="">
+            <img v-lazy="item.image" alt="">
             <div class="detail" @click="toDetail(item.goodsId, item.type)">
               <div class="name">{{ item.goodsName || '示例商品名称' }}</div>
               <div class="status" v-if="item.status===2">待发货</div>

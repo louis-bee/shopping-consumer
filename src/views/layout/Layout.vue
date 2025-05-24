@@ -11,7 +11,7 @@
           <!-- 循环渲染商品列表 -->
           <li v-for="item in list" :key="item.id" @click="toDetail(item.id, item.type)">
             <!-- 商品图片 -->
-            <img :src="item.image" alt="">
+            <img v-lazy="item.image" alt="">
             <!-- 商品名称 -->
             <div class="name">{{ item.goodsName }}</div>
             <!-- 商品价格 -->
