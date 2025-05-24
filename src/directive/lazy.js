@@ -1,7 +1,7 @@
 const lazy = {
   bind: function (el, binding) {
     el.setAttribute('data-src', binding.value)
-    el.src = require('@/assets/img/louislogo.webp')
+    // el.src = require('@/assets/img/louislogo.webp')
   },
   inserted: function (el) {
     const observer = new IntersectionObserver((entries, observer) => {
