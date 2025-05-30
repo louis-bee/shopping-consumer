@@ -49,8 +49,8 @@ export default {
     return {
       // 表单数据绑定
       form: {
-        account: 'admin2',
-        pwd: '123123',
+        account: '',
+        pwd: '',
         role: 1
       },
       loginRole: null
