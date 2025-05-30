@@ -1,39 +1,35 @@
 <template>
-  <!-- 登录页面容器 -->
   <div class="login">
-    <!-- 引入头部组件，设置为不固定，不显示导航和链接 -->
     <Header :fix=true :showNavBox=false :showLinkBox=false ></Header>
-    <!-- 主体内容 -->
     <div class="main">
-      <!-- 登录标题 -->
       <div class="title">
         <h1>登 录</h1>
-        <!-- 返回商店链接 -->
         <span @click="$router.push('/')">回到商店</span>
       </div>
-      <!-- 登录表单 -->
       <div class="form">
-        <!-- 账号输入提示 -->
         <h4>账 号</h4>
-        <!-- 账号输入框 -->
-        <input v-model="form.account" type="text" placeholder="请输入账号">
-        <!-- 密码输入提示 -->
+        <input v-model="form.account" type="text" placeholder="请输入账号" @keydown.enter="$refs.password.focus()" ref="account">
         <h4>密 码</h4>
-        <!-- 密码输入框 -->
-        <input v-model="form.pwd" type="password" placeholder="请输入密码">
-        <!-- 登录按钮 -->
+        <input v-model="form.pwd" type="password" placeholder="请输入密码" @keydown.enter="submit" ref="password">
         <div class="submit" @click="submit">登 录</div>
-        <!-- 其他选项 -->
         <div class="choice-box">
-          <!-- 注册链接 -->
           <span @click="$router.push('/register')">注册</span>
-          <!-- 忘记密码链接 -->
           <span @click="forgetPwd">忘记密码?</span>
         </div>
       </div>
     </div>
-    <!-- 引入页脚组件 -->
     <Footer></Footer>
+    <Alert ref="alertDialog" placement="center" @on-confirm="jump">
+      <div class="alert">
+        <div class="head">登录提示</div>
+        <div class="body">
+          当前为用户端，请前往
+          <a v-if="loginRole===2" href="http://seller.brotherlouis.site" target="_blank">销售后台</a>
+          <a v-if="loginRole===3" href="http://admin.brotherlouis.site" target="_blank">后台管理端</a>
+          登录。
+        </div>
+      </div>
+    </Alert>
   </div>
 </template>
 
@@ -41,21 +37,27 @@
 // 引入子组件
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import Alert from '@/components/Alert.vue'
 export default {
   name: 'Login',
   components: {
     Header,
-    Footer
+    Footer,
+    Alert
   },
   data () {
     return {
       // 表单数据绑定
       form: {
-        account: null,
-        pwd: null,
+        account: 'admin2',
+        pwd: '123123',
         role: 1
-      }
+      },
+      loginRole: null
     }
+  },
+  mounted () {
+    this.$refs.account.focus()
   },
   methods: {
     // 忘记密码处理函数
@@ -81,6 +83,9 @@ export default {
           this.getCartNum(res.data.id)
           // 跳转到首页
           this.$router.push('/')
+        } else if (res.status === 304) {
+          this.loginRole = res.role
+          this.$refs.alertDialog.show()
         } else {
           alert(res.desc)
         }
@@ -94,6 +99,10 @@ export default {
           this.$store.commit('setCartNum', res.data.cartNum)
         }
       })
+    },
+    jump () {
+      if (this.loginRole === 2) window.open('http://seller.brotherlouis.site', '_blank')
+      if (this.loginRole === 3) window.open('http://admin.brotherlouis.site', '_blank')
     }
   }
 }
@@ -165,6 +174,27 @@ export default {
         &:hover {
           color: rgb(237, 237, 237);
         }
+      }
+    }
+  }
+}
+.alert {
+  .head {
+    padding-top: 20px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .body {
+    padding-top: 20px;
+    padding-left: 10px;
+    a {
+      color: black;
+      // text-decoration: none;
+      &:hover {
+        color: rgb(129, 129, 124);
+      }
+      &:active {
+        color: rgb(173, 173, 170);
       }
     }
   }
