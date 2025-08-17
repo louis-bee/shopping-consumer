@@ -119,6 +119,7 @@ export default {
 <style scoped lang="scss">
 // 定义布局的样式
 .main {
+  min-height: 520px;
   margin: 0 auto;
   margin-top: 10px;
   width: 1230px;
